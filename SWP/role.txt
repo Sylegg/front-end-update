@@ -1,0 +1,190 @@
+Tổng quan vai trò
+
+Dealer Staff (Nhân viên bán hàng/CSKH tại đại lý)
+Dealer Manager (Quản lý đại lý)
+EVM Staff (Nhân viên hãng: kho, phân phối, kinh doanh kênh)
+Administrator (Quản trị hệ thống thuộc EVM)
+I. Dealer Staff – Luồng chính
+
+Tra cứu xe & So sánh
+Tiền điều kiện: Đăng nhập; quyền xem danh mục xe.
+Bước:
+Mở Catalog xe → lọc theo mẫu/phiên bản/màu/cấu hình.
+Xem thông số kỹ thuật, giá bán lẻ, tồn kho đại lý (nếu có).
+Thêm 2–3 mẫu vào Compare → so sánh tính năng/giá/khuyến mãi.
+Biến thể:
+Có khuyến mãi áp dụng tự động hiển thị mức giá sau ưu đãi.
+Đầu ra: Danh sách xe đã chọn, phương án tư vấn cho khách.
+Dữ liệu: Model, Version, Color, Config, MSRP, Promotion.
+Bán hàng: Báo giá → Đơn hàng → Hợp đồng → Thanh toán → Giao xe
+Tiền điều kiện: Khách hàng đã được tạo hồ sơ/lead; xe có khả dụng.
+Bước:
+Tạo Báo giá: chọn khách hàng, xe, cấu hình, phụ kiện, khuyến mãi.
+Chốt Báo giá → chuyển Đơn hàng (SO); giữ chỗ xe (reserve).
+Tạo Hợp đồng bán (Contract): điều khoản, thanh toán, giao xe.
+Thu tiền:
+Trả thẳng: tạo phiếu thu, đối soát; cập nhật công nợ KH = 0.
+Trả góp: nhập phương án trả góp, duyệt ngân hàng (nếu tích hợp), lịch trả.
+Điều phối giao xe: đặt lịch đăng ký/biển số, chuẩn bị xe, ký nhận giao.
+Hoàn tất: kích hoạt bảo hành/bảo hiểm (nếu có), gửi hóa đơn/chứng từ.
+Biến thể:
+Cần phê duyệt chiết khấu vượt hạn mức → chờ Dealer Manager duyệt.
+Hết xe tại đại lý → tạo yêu cầu điều chuyển nội bộ hoặc đặt xe từ EVM.
+Đầu ra: SO, Contract, Receipt/Invoice, Delivery Note, trạng thái “Delivered”.
+Dữ liệu: Quote, Order, Contract, Payment, Promotion, Stock, Delivery.
+Quản lý khách hàng (CRM cơ bản)
+Tiền điều kiện: Quyền CRM.
+Bước:
+Tạo/lưu hồ sơ khách: thông tin cá nhân, nhu cầu, lịch sử tương tác.
+Đặt lịch lái thử: chọn xe/slot, gửi nhắc lịch, ghi nhận kết quả lái thử.
+Ghi nhận phản hồi/khiếu nại: phân loại, mức độ, giao việc xử lý.
+Theo dõi trạng thái lead → cơ hội → khách mua → hậu mãi.
+Biến thể:
+Chuyển khiếu nại phức tạp cho Dealer Manager hoặc EVM Staff.
+Đầu ra: Lead/Customer record cập nhật; ticket khiếu nại với SLA.
+Dữ liệu: Customer, Lead/Opportunity, Test Drive, Ticket/Case.
+Khuyến mãi tại điểm bán
+Bước:
+Xem danh sách khuyến mãi hiện hành (từ EVM hoặc đại lý).
+Áp dụng khuyến mãi vào báo giá/đơn hàng theo điều kiện hợp lệ.
+Đầu ra: Giá sau ưu đãi; báo cáo sử dụng khuyến mãi.
+Dữ liệu: Promotion, Eligibility, Audit log.
+Báo cáo cá nhân
+Bước:
+Xem doanh số theo kỳ, tỷ lệ chuyển đổi, test drive thành bán.
+Xem công nợ khách phụ trách, trạng thái đơn hàng/giao xe.
+Đầu ra: Báo cáo doanh số cá nhân; cảnh báo đơn hàng tồn đọng.
+Dữ liệu: Sales KPIs, AR by customer, Pipeline.
+II. Dealer Manager – Luồng chính
+
+Phê duyệt & Kiểm soát bán hàng
+Bước:
+Duyệt chiết khấu vượt hạn mức/giá đặc biệt.
+Duyệt hợp đồng lớn (fleet) và điều khoản thanh toán.
+Đầu ra: Trạng thái duyệt; nhật ký kiểm soát.
+Dữ liệu: Approval rules, Contract, Discount policy.
+Quản lý khuyến mãi tại đại lý
+Bước:
+Tạo/điều chỉnh khuyến mãi nội bộ (nếu hệ thống cho phép).
+Cấu hình điều kiện áp dụng; ngân sách; thời hạn.
+Đầu ra: Promotion khả dụng cho Dealer Staff.
+Dữ liệu: Promotion, Budget, Redemption.
+Đặt xe từ Hãng (EVM) và điều phối tồn kho
+Bước:
+Dự báo nhu cầu đại lý (dựa trên bán ra/pipeline).
+Tạo PO đặt hàng EVM: model, version, màu, số lượng, thời gian cần.
+Theo dõi trạng thái: xác nhận, sản xuất (nếu cần), vận chuyển, ETA.
+Nhập kho khi xe về; điều chuyển giữa chi nhánh (nếu có).
+Biến thể:
+EVM đề nghị phân bổ khác → thương lượng/cập nhật PO.
+Đầu ra: PO, lịch về hàng, tồn kho cập nhật.
+Dữ liệu: Purchase Order, Allocation, Inbound shipment, Inventory.
+Công nợ & thanh toán
+Bước:
+Theo dõi công nợ khách hàng (AR) và công nợ với EVM (AP).
+Lập kế hoạch thu/chi; đối soát hóa đơn, chiết khấu thương mại.
+Đầu ra: Báo cáo công nợ; cảnh báo nợ quá hạn.
+Dữ liệu: AR/AP, Invoice, Credit note, Payment schedule.
+Báo cáo & Hiệu suất
+Bước:
+Doanh số theo nhân viên, dòng xe; tỷ lệ chốt; thời gian giao xe.
+Hiệu quả khuyến mãi; tồn kho ngày phủ (DOI).
+Đầu ra: Dashboard quản trị đại lý; KPI cá nhân/đội nhóm.
+Dữ liệu: Sales, Promotions, Inventory KPIs.
+III. EVM Staff – Luồng chính
+
+Quản lý danh mục & chính sách giá
+Bước:
+Tạo/duy trì Catalog: model, version, color, cấu hình, option.
+Cài đặt giá bán sỉ, chiết khấu theo đại lý/khu vực/target.
+Công bố khuyến mãi toàn hệ thống; điều kiện/period/budget.
+Đầu ra: Catalog + Price list + Promotions có hiệu lực.
+Dữ liệu: Product master, Wholesale price, Discount policy, Promotion.
+Quản lý kho tổng & phân bổ
+Bước:
+Nhập xe về kho tổng; quản lý lô/IMEI/VIN.
+Phân bổ cho đại lý theo PO/target/ưu tiên tồn kho/khu vực.
+Tạo lịch vận chuyển; cung cấp ETA; cập nhật tracking.
+Đầu ra: Allocation plan; shipment schedule; trạng thái giao.
+Dữ liệu: Inventory, Allocation, Shipment, VIN.
+Xử lý đơn đặt hàng từ đại lý
+Bước:
+Tiếp nhận PO từ đại lý; kiểm tra khả dụng/plan sản xuất.
+Xác nhận PO, thời gian giao; phát hành proforma/contract kênh.
+Theo dõi thanh toán/điều kiện giao; xuất kho giao đại lý.
+Đầu ra: PO confirmed; chứng từ xuất; cập nhật tồn kho.
+Dữ liệu: Dealer PO, Sales contract (B2B), Invoice, Delivery.
+Quản lý đại lý (hợp đồng/target/tài khoản)
+Bước:
+Quản lý hợp đồng phân phối, chỉ tiêu theo kỳ, mức chiết khấu bậc thang.
+Quản lý tài khoản người dùng đại lý (nếu được ủy quyền bởi Admin).
+Đầu ra: Agent profile; target; quyền truy cập cấp đại lý.
+Dữ liệu: Dealer master, Targets, Rebate tiers, Users.
+Báo cáo & Phân tích
+Bước:
+Doanh số theo vùng/đại lý/dòng xe; tồn kho; vòng quay.
+Tỷ lệ tiêu thụ; hiệu quả phân bổ; tắc nghẽn logistics.
+Đầu ra: Báo cáo vận hành và kinh doanh kênh.
+Dữ liệu: Sales, Inventory, Logistics KPIs.
+IV. Administrator (EVM Admin) – Luồng chính
+
+Quản trị hệ thống & tài khoản
+Bước:
+Quản lý người dùng, vai trò, phân quyền (RBAC).
+Cấu hình tham số hệ thống: tiền tệ, thuế, chuẩn số khung, SLA.
+Đầu ra: Bảo mật và tuân thủ; audit trails.
+Dữ liệu: Users, Roles, Permissions, Settings.
+Quản trị chính sách & phê duyệt cấp cao
+Bước:
+Thiết lập/duyệt khung giá, chiết khấu, khuyến mãi cấp hãng.
+Cấu hình quy tắc phê duyệt (workflow/threshold).
+Đầu ra: Policy hợp lệ toàn hệ thống.
+Dữ liệu: Pricing policy, Approval rules, Promotion master.
+AI dự báo nhu cầu & kế hoạch SX/PP (Production & Distribution)
+Bước:
+Thu thập dữ liệu: lịch sử bán, tồn kho, pipeline, mùa vụ, khu vực.
+Huấn luyện/triển khai mô hình; theo dõi sai số (MAPE/WAPE).
+Sinh forecast theo SKU x khu vực x kỳ; xuất kế hoạch đặt linh kiện/SX.
+Chuyển forecast sang gợi ý phân bổ/điều phối cho EVM Staff.
+Đầu ra: Demand forecast; kế hoạch sản xuất & phân phối đề xuất.
+Dữ liệu: Sales history, Inventory, Leads, Seasonality, Forecast.
+Báo cáo điều hành tổng hợp
+Bước:
+Dashboard điều hành: bán ra, tồn kho, công nợ, lợi nhuận biên.
+Cảnh báo rủi ro: tồn già, nợ quá hạn, thiếu hàng, sai lệch forecast.
+Đầu ra: Báo cáo quản trị cấp cao; cảnh báo realtime.
+Dữ liệu: Consolidated KPIs.
+V. Luồng liên thông end-to-end tiêu biểu
+
+Lead → Test Drive → Báo giá → Đơn hàng → Hợp đồng → Thanh toán → Giao xe → Hậu mãi
+Dealer Staff: tạo lead, đặt lịch lái thử, báo giá, đơn hàng, hợp đồng, thu tiền, giao xe.
+Dealer Manager: phê duyệt chiết khấu/giá đặc biệt (nếu có).
+Kết quả: Khách nhận xe; bảo hành kích hoạt; cập nhật doanh số & công nợ.
+Đặt xe từ đại lý → Xác nhận EVM → Vận chuyển → Nhập kho đại lý
+Dealer Manager: tạo PO theo nhu cầu/forecast đại lý.
+EVM Staff: kiểm tra khả dụng/production; xác nhận PO; sắp lịch vận chuyển; cập nhật ETA.
+Dealer: nhận xe, nhập kho, sẵn sàng bán.
+Kết quả: Bổ sung tồn; dòng tiền và công nợ B2B cập nhật.
+Khuyến mãi hãng → Đồng bộ về đại lý → Áp dụng tại bán hàng → Báo cáo hiệu quả
+Administrator/EVM Staff: tạo khuyến mãi; publish.
+Dealer Staff: áp dụng trong báo giá/đơn hàng; hệ thống kiểm tra điều kiện.
+Báo cáo: tỷ lệ sử dụng, doanh số ảnh hưởng, chi phí khuyến mãi.
+Công nợ & Thanh toán (KH và Đại lý ↔ EVM)
+Dealer: theo dõi AR khách; thu tiền; đối soát.
+Dealer Manager: theo dõi AP với EVM; lên kế hoạch thanh toán.
+EVM Staff: phát hành invoice B2B; đối soát, ghi nhận thanh toán, chiết khấu đạt target.
+VI. Sự kiện & thông báo (Notifications)
+
+Trạng thái đơn/PO/Shipment thay đổi → notify người liên quan (app/email).
+Lịch lái thử/giao xe đến hạn → nhắc lịch.
+Hết tồn/mức tồn an toàn → cảnh báo.
+Khuyến mãi sắp hết hạn/over-budget → cảnh báo.
+Duyệt/không duyệt chiết khấu → notify ngay cho NVKD.
+VII. Đối tượng dữ liệu cốt lõi
+
+Sản phẩm: Model, Version, Color, Config, Option, Price (MSRP/Wholesale).
+Bán hàng: Quote, Sales Order, Contract, Delivery, Invoice, Receipt, Payment.
+Mua hàng/Phân phối: Dealer PO, Allocation, Shipment, VIN, Inventory.
+CRM: Customer, Lead/Opportunity, Test Drive, Case/Ticket.
+Tổ chức: Dealer master, User, Role, Approval rule, Promotion, Targets.
+Phân tích: Sales history, Forecast, KPI, Alerts.
